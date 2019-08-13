@@ -15,6 +15,12 @@ dependencies:
 
 ## Usage
 
+First, checkout the repo, and build the executable by running `make`.
+
+(To run a more efficient release exec, run `make build_exec_release`. `make` defaults to non-release `build_exec` for ease during development.)
+
+Here is an output of running `./crayster --help`
+
 ```
 $ ./crayster --help
 
@@ -40,9 +46,20 @@ $ ./crayster --help
     cleanup   cleans up (removes recursively) a project directory
 ```
 
+Examples:
+
+```
+$ ./crayster FooTest              # creates ./foo_test
+$ ./crayster abc_123              # creates ./abc_123
+$ ./crayster abc_123 ../parent    # creates ../parent/abc_123
+$ ./crayster NewGame ~/code       # creates ~/code/new_game
+```
+
 ## Development
 
-TODO: Write development instructions here
+Running `make` (or `make build_exec_release`) will build the `crayster` executable via `crystal build`.
+
+(To run a more efficient release exec, run `make build_exec_release`. `make` defaults to non-release `build_exec` for ease during development.)
 
 ## Contributing
 
