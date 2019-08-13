@@ -1,6 +1,8 @@
 require "clim"
 
 module Crayster
+  VERSION = "0.3.0"
+
   class Cli < Clim
     DEBUG = true
 
@@ -15,7 +17,7 @@ module Crayster
     main do
       desc "Create new Cray (Crystal RayLib) project"
       usage "#{EXECUTABLE} [--name NAME] [--parent-dir PARENT_DIRECTORY] [NAME]"
-      version "Version 0.1.0", short: "-v"
+      version "Version #{VERSION}", short: "-v"
 
       option "-n NAME", "--name=NAME", type: String, desc: "Project name", required: false
       option "-p PARENT_DIRECTORY", "--parent-dir=PARENT_DIRECTORY", type: String, desc: "Parent directory to create project directory in", required: false, default: DEFAULT_PARENT_DIR
