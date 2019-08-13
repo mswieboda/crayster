@@ -1,7 +1,7 @@
-default: build_exec
+default: build
 
-build_exec:
+build:
 	crystal build src/crayster.cr
 
-build_exec_release:
+release:
 	crystal build --release src/crayster.cr

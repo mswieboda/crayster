@@ -17,7 +17,7 @@ dependencies:
 
 First, checkout the repo, and build the executable by running `make`.
 
-(To run a more efficient release exec, run `make build_exec_release`. `make` defaults to non-release `build_exec` for ease during development.)
+(To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
 
 Here is an output of running `./crayster --help`
 
@@ -59,7 +59,7 @@ $ ./crayster NewGame ~/code       # creates ~/code/new_game
 
 Running `make` (or `make build_exec_release`) will build the `crayster` executable via `crystal build`.
 
-(To run a more efficient release exec, run `make build_exec_release`. `make` defaults to non-release `build_exec` for ease during development.)
+(To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
 
 ## Contributing
 
