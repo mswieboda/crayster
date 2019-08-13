@@ -61,6 +61,17 @@ Running `make` (or `make build_exec_release`) will build the `crayster` executab
 
 (To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
 
+#### TODO:
+
+- [x] crystal init app NAME
+- [x] copy lib_ext/libraylib.dylib
+- [] make RayLib dynamically from source (using https://github.com/tapgg/cray repo)
+- [] copy lib based on ENV (macOS/Linux/Win) .dylib/.so/.dll
+- [x] Makefile
+- [] shards.yml
+- [] shell of Game/Window/etc class
+- [] shell of LibRay game loop logic
+
 ## Contributing
 
 1. Fork it (<https://github.com/your-github-user/crayster/fork>)
