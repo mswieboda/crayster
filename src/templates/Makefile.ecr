@@ -1,0 +1,20 @@
+default: build_run
+
+builds_mkdir:
+	if [ ! -d "./builds" ]; then mkdir "builds"; fi
+
+build: builds_mkdir
+	env LIBRARY_PATH="$(PWD)/<%= @lib_ext_path %>" crystal build src/<%= @exec %>.cr -o builds/<%= @exec %>
+
+build_release: builds_mkdir
+	env LIBRARY_PATH="$(PWD)/<%= @lib_ext_path %>" crystal build --release --no-debug src/<%= @exec %>.cr -o builds/<%= @exec %>_release
+
+build_run: build run
+
+build_release_run: build_release run_release
+
+run:
+	env LD_LIBRARY_PATH="$(PWD)/<%= @lib_ext_path %>" ./builds/<%= @exec %>
+
+run_release:
+	env LD_LIBRARY_PATH="$(PWD)/<%= @lib_ext_path %>" ./builds/<%= @exec %>_release

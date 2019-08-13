@@ -1,11 +1,12 @@
 require "clim"
+require "ecr/macros"
 
 module Crayster
   VERSION = "0.3.1"
 
-  class Cli < Clim
-    CRAYSTER_SOURCE_DIR = "___CRAYSTER_SRC_DIR___"
+  CRAYSTER_SOURCE_DIR = "___CRAYSTER_SRC_DIR___"
 
+  class Cli < Clim
     DEBUG = true
 
     EXECUTABLE = "crayster"
@@ -39,7 +40,7 @@ module Crayster
         project_dir = "#{parent_dir}/#{name_under}"
 
         lib_name = "lib_ext"
-        lib_dir = "#{Cli::CRAYSTER_SOURCE_DIR}/#{lib_name}"
+        lib_dir = "#{CRAYSTER_SOURCE_DIR}/#{lib_name}"
         project_lib_dir = "#{project_dir}/#{lib_name}"
 
         if DEBUG
@@ -145,32 +146,10 @@ module Crayster
     end
 
     def self.create_makefile(project_dir, exec, lib_ext_path)
-      content = <<-CONTENT
-      default: build_run
+      content = MakefileView.new(exec, lib_ext_path).to_s
 
-      builds_mkdir:
-      \tif [ ! -d "./builds" ]; then mkdir "builds"; fi
-
-      build: builds_mkdir
-      \tenv LIBRARY_PATH="$(PWD)/#{lib_ext_path}" crystal build src/#{exec}.cr -o builds/#{exec}
-
-      build_release: builds_mkdir
-      \tenv LIBRARY_PATH="$(PWD)/#{lib_ext_path}" crystal build --release --no-debug src/#{exec}.cr -o builds/#{exec}_release
-
-      build_run: build run
-
-      build_release_run: build_release run_release
-
-      run:
-      \tenv LD_LIBRARY_PATH="$(PWD)/#{lib_ext_path}" ./builds/#{exec}
-
-      run_release:
-      \tenv LD_LIBRARY_PATH="$(PWD)/#{lib_ext_path}" ./builds/#{exec}_release
-
-      CONTENT
-
-      file_path = "#{project_dir}/Makefile"
-      command_message = "creating Makefile: #{file_path}"
+      file_path = "#{project_dir}/#{MakefileView::FILE_NAME}"
+      command_message = "creating: #{MakefileView::FILE_NAME}"
 
       if Cli.test_run
         puts command_message
@@ -179,6 +158,17 @@ module Crayster
         File.write(file_path, content)
       end
     end
+  end
+
+  class MakefileView
+    FILE_NAME = "Makefile"
+
+    def initialize(@exec : String, @lib_ext_path : String)
+    end
+
+    # TODO: needs a macro function to use the constants I think:
+    # ECR.def_to_s "#{{{TEMPLATES_DIR}}}/#{{{FILE_NAME}}}.ecr"
+    ECR.def_to_s "src/templates/Makefile.ecr"
   end
 end
 
