@@ -4,6 +4,8 @@ module Crayster
   VERSION = "0.3.1"
 
   class Cli < Clim
+    CRAYSTER_SOURCE_DIR = "___CRAYSTER_SRC_DIR___"
+
     DEBUG = true
 
     EXECUTABLE = "crayster"
@@ -11,7 +13,6 @@ module Crayster
     DEFAULT_NEW_NAME   = "NewCraysterProject"
     DEFAULT_PARENT_DIR = "./"
 
-    @@exec_dir : String = ""
     @@test_run = DEBUG
 
     main do
@@ -38,7 +39,7 @@ module Crayster
         project_dir = "#{parent_dir}/#{name_under}"
 
         lib_name = "lib_ext"
-        lib_dir = "#{Cli.exec_dir}/#{lib_name}"
+        lib_dir = "#{Cli::CRAYSTER_SOURCE_DIR}/#{lib_name}"
         project_lib_dir = "#{project_dir}/#{lib_name}"
 
         if DEBUG
@@ -102,7 +103,6 @@ module Crayster
     end
 
     def self.init
-      set_exec_dir
       test_run = DEBUG
     end
 
@@ -112,14 +112,6 @@ module Crayster
 
     def self.test_run
       @@test_run
-    end
-
-    def self.set_exec_dir
-      @@exec_dir = File.dirname(Process.executable_path.as(String))
-    end
-
-    def self.exec_dir
-      @@exec_dir
     end
 
     def self.run(command)
