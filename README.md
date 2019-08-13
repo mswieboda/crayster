@@ -3,14 +3,12 @@ Creates a new Cray (Crystal RayLib) project, copying the needed RayLib MacOS dyl
 
 ## Usage
 
-First, checkout the repo, then build the executable by running `make` (this will install dependencies via `shards install` unless already done).
+First, checkout the repo, then build the executable by running `make` or `make install`. This will build a release of `crayster` and place in `/usr/local/bin` similar to Homebrew installs.
 
-(To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
-
-Here is an output of running `./crayster --help`
+Here is an output of running `crayster --help`
 
 ```
-$ ./crayster --help
+$ crayster --help
 
   Creates a new Cray (Crystal RayLib) project, copying required RayLib library
 
@@ -37,17 +35,15 @@ $ ./crayster --help
 Examples:
 
 ```
-$ ./crayster FooTest              # creates ./foo_test
-$ ./crayster abc_123              # creates ./abc_123
-$ ./crayster abc_123 ../parent    # creates ../parent/abc_123
-$ ./crayster NewGame ~/code       # creates ~/code/new_game
+$ crayster FooTest              # creates ./foo_test
+$ crayster abc_123              # creates ./abc_123
+$ crayster abc_123 ../parent    # creates ../parent/abc_123
+$ crayster NewGame ~/code       # creates ~/code/new_game
 ```
 
 ## Development
 
-Running `make` (or `make release`) will build the `crayster` executable via `crystal build`.
-
-This will install dependencies via `shards install` unless already done.
+Running `make` build the `crayster` release executable via `shards build`, and copy to `/usr/local/bin`.
 
 #### TODO:
 
@@ -60,6 +56,7 @@ This will install dependencies via `shards install` unless already done.
 - [ ] add cray dependency to shards.yml
 - [ ] shell of Game/Window/etc class
 - [ ] shell of LibRay game loop logic
+- [ ] submit PR to [Homebrew](https://github.com/Homebrew/homebrew-core)
 
 ## Contributing
 
