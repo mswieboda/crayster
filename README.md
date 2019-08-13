@@ -3,7 +3,7 @@ Creates a new Cray (Crystal RayLib) project, copying the needed RayLib MacOS dyl
 
 ## Usage
 
-First, checkout the repo, and build the executable by running `make`.
+First, checkout the repo, and install shards via `shards install`, then build the executable by running `make`.
 
 (To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
 
@@ -44,6 +44,8 @@ $ ./crayster NewGame ~/code       # creates ~/code/new_game
 ```
 
 ## Development
+
+Install shards via `shards install`
 
 Running `make` (or `make build_exec_release`) will build the `crayster` executable via `crystal build`.
 
