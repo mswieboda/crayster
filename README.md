@@ -10,7 +10,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   clim:
     github: mswieboda/crayster
-    version: 0.3.0
+    version: 0.3.1
 ```
 
 ## Usage

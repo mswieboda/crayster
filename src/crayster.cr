@@ -1,7 +1,7 @@
 require "clim"
 
 module Crayster
-  VERSION = "0.3.0"
+  VERSION = "0.3.1"
 
   class Cli < Clim
     DEBUG = true
@@ -58,7 +58,8 @@ module Crayster
         end
 
         result = Cli.crystal_init_app(name_camel, project_dir, opts.force, opts.skip_existing)
-        Cli.copy_dir(lib_dir, project_lib_dir) if result
+        result = Cli.copy_dir(lib_dir, project_lib_dir) if result
+        Cli.create_makefile(project_dir, name_under, lib_name) if result
       end
 
       sub "cleanup" do
@@ -149,6 +150,42 @@ module Crayster
 
     def self.get_name(opts_name, args)
       opts_name || (args.any? ? args : nil).try(&.first) || DEFAULT_NEW_NAME
+    end
+
+    def self.create_makefile(project_dir, exec, lib_ext_path)
+      content = <<-CONTENT
+      default: build_run
+
+      builds_mkdir:
+      \tif [ ! -d "./builds" ]; then mkdir "builds"; fi
+
+      build: builds_mkdir
+      \tenv LIBRARY_PATH="$(PWD)/#{lib_ext_path}" crystal build src/#{exec}.cr -o builds/#{exec}
+
+      build_release: builds_mkdir
+      \tenv LIBRARY_PATH="$(PWD)/#{lib_ext_path}" crystal build --release --no-debug src/#{exec}.cr -o builds/#{exec}_release
+
+      build_run: build run
+
+      build_release_run: build_release run_release
+
+      run:
+      \tenv LD_LIBRARY_PATH="$(PWD)/#{lib_ext_path}" ./builds/#{exec}
+
+      run_release:
+      \tenv LD_LIBRARY_PATH="$(PWD)/#{lib_ext_path}" ./builds/#{exec}_release
+
+      CONTENT
+
+      file_path = "#{project_dir}/Makefile"
+      command_message = "creating Makefile: #{file_path}"
+
+      if Cli.test_run
+        puts command_message
+      else
+        puts command_message if DEBUG
+        File.write(file_path, content)
+      end
     end
   end
 end
