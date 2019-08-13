@@ -53,12 +53,12 @@ Running `make` (or `make build_exec_release`) will build the `crayster` executab
 
 - [x] crystal init app NAME
 - [x] copy lib_ext/libraylib.dylib
-- [] make RayLib dynamically from source (using https://github.com/tapgg/cray repo)
-- [] copy lib based on ENV (macOS/Linux/Win) .dylib/.so/.dll
+- [ ] make RayLib dynamically from source (using https://github.com/tapgg/cray repo)
+- [ ] copy lib based on ENV (macOS/Linux/Win) .dylib/.so/.dll
 - [x] Makefile
-- [] shards.yml
-- [] shell of Game/Window/etc class
-- [] shell of LibRay game loop logic
+- [ ] shards.yml
+- [ ] shell of Game/Window/etc class
+- [ ] shell of LibRay game loop logic
 
 ## Contributing
 
