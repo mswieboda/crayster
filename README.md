@@ -3,7 +3,7 @@ Creates a new Cray (Crystal RayLib) project, copying the needed RayLib MacOS dyl
 
 ## Usage
 
-First, checkout the repo, and install shards via `shards install`, then build the executable by running `make`.
+First, checkout the repo, then build the executable by running `make` (this will install dependencies via `shards install` unless already done).
 
 (To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
 
@@ -45,31 +45,26 @@ $ ./crayster NewGame ~/code       # creates ~/code/new_game
 
 ## Development
 
-Install shards via `shards install`
+Running `make` (or `make release`) will build the `crayster` executable via `crystal build`.
 
-Running `make` (or `make build_exec_release`) will build the `crayster` executable via `crystal build`.
-
-(To run a more efficient release exec, run `make release`. `make` defaults to non-release `build` for ease during development.)
+This will install dependencies via `shards install` unless already done.
 
 #### TODO:
 
 - [x] crystal init app NAME
-- [x] copy lib_ext/libraylib.dylib
-- [ ] make RayLib dynamically from source (using https://github.com/tapgg/cray repo)
-- [ ] copy lib based on ENV (macOS/Linux/Win) .dylib/.so/.dll
-- [x] Makefile
-- [ ] shards.yml
+- [x] copy lib_ext/libraylib.dylib (macOS only)
+- [ ] copy lib file based on current OS (macOS/Linux/Win) .dylib/.so/.dll
+- [ ] make RayLib dynamically from source (using https://github.com/tapgg/cray repo) (for macOS only)
+- [ ] make RayLib dynamically from source (using https://github.com/tapgg/cray repo) for current OS (macOS/Linux/Win)
+- [x] create project Makefile
+- [ ] add cray dependency to shards.yml
 - [ ] shell of Game/Window/etc class
 - [ ] shell of LibRay game loop logic
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/crayster/fork>)
+1. Fork it (<https://github.com/mswieboda/crayster/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-
-## Contributors
-
-- [Matt Swieboda](https://github.com/your-github-user) - creator and maintainer
