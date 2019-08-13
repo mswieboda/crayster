@@ -15,7 +15,7 @@ module Crayster
     @@test_run = DEBUG
 
     main do
-      desc "Create new Cray (Crystal RayLib) project"
+      desc "Creates a new Cray (Crystal RayLib) project, copying required RayLib library"
       usage "#{EXECUTABLE} [--name NAME] [--parent-dir PARENT_DIRECTORY] [NAME]"
       version "Version #{VERSION}", short: "-v"
 

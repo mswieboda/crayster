@@ -1,6 +1,6 @@
 # crayster
 
-TODO: Write a description here
+Creates a new Cray (Crystal RayLib) project, copying the needed RayLib MacOS dylib to the directory as well.
 
 ## Installation
 
@@ -18,7 +18,7 @@ dependencies:
 ```
 $ ./crayster --help
 
-  Create new Cray (Crystal RayLib) project
+  Creates a new Cray (Crystal RayLib) project, copying required RayLib library
 
   Usage:
 
