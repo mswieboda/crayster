@@ -4,4 +4,4 @@ build:
 	crystal build src/crayster.cr
 
 release:
-	crystal build --release src/crayster.cr
+	crystal build --release --no-debug src/crayster.cr
