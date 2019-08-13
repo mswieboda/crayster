@@ -1,10 +1,15 @@
-default: build
+SHARDS_BIN ?= $(shell which shards)
+CRAYSTER_BIN ?= $(shell which crayster)
+PREFIX ?= /usr/local
 
-shards:
-	if [ ! -d "./lib" ]; then shards install; fi
+default: install
 
-build: shards
-	crystal build src/crayster.cr
-
-release: shards
-	crystal build --release --no-debug src/crayster.cr
+build:
+	$(SHARDS_BIN) build --release $(CRFLAGS)
+clean:
+	rm -f ./bin/icr ./bin/icr.dwarf
+install: build
+	mkdir -p $(PREFIX)/bin
+	cp ./bin/crayster $(PREFIX)/bin
+uninstall:
+	rm -fv $(CRAYSTER_BIN)
