@@ -1,17 +1,5 @@
-# crayster
-
 Creates a new Cray (Crystal RayLib) project, copying the needed RayLib MacOS dylib to the directory as well.
 
-## Installation
-
-Add this to your application's `shard.yml`:
-
-```
-dependencies:
-  clim:
-    github: mswieboda/crayster
-    version: 0.3.1
-```
 
 ## Usage
 
