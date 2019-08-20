@@ -43,7 +43,7 @@ $ crayster NewGame ~/code       # creates ~/code/new_game
 
 ## Development
 
-Running `make` build the `crayster` release executable via `shards build`, and copy to `/usr/local/bin`.
+Running `make` will build the `crayster` release executable via `shards build`, and copy the exec to `/usr/local/bin`.
 
 #### TODO:
 
