@@ -2,7 +2,7 @@ require "clim"
 require "ecr/macros"
 
 module Crayster
-  VERSION = "0.3.1"
+  VERSION = "0.3.2"
 
   CRAYSTER_SOURCE_DIR = "___CRAYSTER_SRC_DIR___"
 
@@ -61,7 +61,8 @@ module Crayster
 
         result = Cli.crystal_init_app(name_camel, project_dir, opts.force, opts.skip_existing)
         result = Cli.copy_dir(lib_dir, project_lib_dir) if result
-        Cli.create_makefile(project_dir, name_under, lib_name) if result
+        result = Cli.create_makefile(project_dir, name_under, lib_name) if result
+        result = Cli.add_shard_dependencies(project_dir)
       end
 
       sub "cleanup" do
@@ -124,6 +125,17 @@ module Crayster
       end
     end
 
+    def self.write(file_path, content, mode = "w")
+      command_message = "writing (mode: #{mode ? mode : 'w'}) to: #{file_path}"
+
+      if Cli.test_run
+        puts command_message
+      else
+        puts command_message if DEBUG
+        File.write(file_path, content, mode: mode)
+      end
+    end
+
     def self.crystal_init_app(name, parent_dir, force = false, skip_existing = false)
       full_args = ""
       full_args += "--force " if force
@@ -149,14 +161,22 @@ module Crayster
       content = MakefileView.new(exec, lib_ext_path).to_s
 
       file_path = "#{project_dir}/#{MakefileView::FILE_NAME}"
-      command_message = "creating: #{MakefileView::FILE_NAME}"
 
-      if Cli.test_run
-        puts command_message
-      else
-        puts command_message if DEBUG
-        File.write(file_path, content)
-      end
+      write(file_path, content)
+    end
+
+    def self.add_shard_dependencies(project_dir)
+      content = <<-CONTENT
+
+      dependencies:
+        cray:
+          gitlab: zatherz/cray
+
+      CONTENT
+
+      file_path = "#{project_dir}/shard.yml"
+
+      write(file_path, content, mode: "a")
     end
   end
 
