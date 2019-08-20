@@ -1,14 +1,28 @@
-Creates a new Cray (Crystal RayLib) project, with all dependencies, and initial source code:
+Creates a new Cray (Crystal RayLib) project with all dependencies and initial source code:
 
 - Creates crystal app via `crystal init app`
 - Copies the Cray RayLib external library to the new app directory (`/lib_ext`)
-- Creates the projects Makefile to build with the RayLib external library
+- Creates the projects `Makefile` to build with the RayLib external library
 - Adds the `cray` dependency to the project's `shard.yml`
 - Creates initial Cray source code with a `Game` class that creates a window and runs game logic (update/draw)
 
 ## Usage
 
 First, checkout the repo, then build the executable by running `make` or `make install`. This will build a release of `crayster` and place in `/usr/local/bin` similar to Homebrew installs.
+
+To checkout, compile, and install:
+```
+$ git clone git@github.com:mswieboda/crayster.git
+$ cd crayster
+$ make
+```
+
+Create a new cray project:
+```
+$ cd ~/some_projects_code_directory
+$ crayster new_cray_game
+$ cd new_cray_game
+```
 
 Here is an output of running `crayster --help`
 
