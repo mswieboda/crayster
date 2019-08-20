@@ -60,7 +60,7 @@ module Crayster
         result = Cli.crystal_init_app(name_under, project_dir, opts.force, opts.skip_existing)
         result = Cli.copy_dir(lib_dir, project_lib_dir) if result
         result = Cli.create_makefile(project_dir, name_under, lib_name) if result
-        result = Cli.add_shard_dependencies(project_dir)
+        result = Cli.add_shard_dependencies(project_dir) if result
       end
 
       sub "cleanup" do

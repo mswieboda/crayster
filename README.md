@@ -54,8 +54,7 @@ Running `make` will build the `crayster` release executable via `shards build`, 
 - [ ] make RayLib dynamically from source (using https://github.com/tapgg/cray repo) for current OS (macOS/Linux/Win)
 - [x] create project Makefile
 - [x] add cray dependency to shards.yml
-- [ ] shell of Game/Window/etc class
-- [ ] shell of LibRay game loop logic
+- [ ] shell of Game class and LibRay game loop logic
 - [ ] submit PR to [Homebrew](https://github.com/Homebrew/homebrew-core)
 
 ## Contributing
