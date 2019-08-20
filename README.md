@@ -41,6 +41,14 @@ $ crayster abc_123 ../parent    # creates ../parent/abc_123
 $ crayster NewGame ~/code       # creates ~/code/new_game
 ```
 
+This will create an initial Cray crystal app:
+
+- Creates crystal app via `crystal init app`
+- Copies the Cray RayLib external library to the new app directory (`/lib_ext`)
+- Creates the projects Makefile to build with the RayLib external library
+- Adds the `cray` dependency to the project's `shard.yml`
+- Creates initial Cray source code with a `Game` class that creates a window and runs game logic (update/draw)
+
 ## Development
 
 Running `make` will build the `crayster` release executable via `shards build`, and copy the exec to `/usr/local/bin`.
