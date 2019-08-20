@@ -2,7 +2,7 @@ require "clim"
 require "ecr/macros"
 
 module Crayster
-  VERSION = "0.3.2"
+  VERSION = "0.3.3"
 
   CRAYSTER_SOURCE_DIR = "___CRAYSTER_SRC_DIR___"
 
@@ -61,6 +61,7 @@ module Crayster
         result = Cli.copy_dir(lib_dir, project_lib_dir) if result
         result = Cli.create_makefile(project_dir, name_under, lib_name) if result
         result = Cli.add_shard_dependencies(project_dir) if result
+        result = Cli.cray_game_shell(project_dir, name_under) if result
       end
 
       sub "cleanup" do
@@ -113,15 +114,21 @@ module Crayster
     end
 
     def self.run(command)
+      result = true
+
       if Cli.test_run
         puts command
       else
         puts command if DEBUG
-        system command
+        result = system command
       end
+
+      result
     end
 
     def self.write(file_path, content, mode = "w")
+      result = true
+
       command_message = "writing (mode: #{mode ? mode : 'w'}) to: #{file_path}"
 
       if Cli.test_run
@@ -130,6 +137,8 @@ module Crayster
         puts command_message if DEBUG
         File.write(file_path, content, mode: mode)
       end
+
+      result
     end
 
     def self.crystal_init_app(name, parent_dir, force = false, skip_existing = false)
@@ -139,6 +148,10 @@ module Crayster
       full_args += "#{name} #{parent_dir}"
 
       run "crystal init app #{full_args}"
+    end
+
+    def self.make_dir(args)
+      run "mkdir #{args}"
     end
 
     def self.copy_dir(arg_from, arg_to)
@@ -173,6 +186,88 @@ module Crayster
       file_path = "#{project_dir}/shard.yml"
 
       write(file_path, content, mode: "a")
+    end
+
+    def self.cray_game_shell(project_dir, name_under)
+      name_camel = name_under.camelcase
+
+      content = <<-CONTENT
+      require "cray"
+      require "./#{name_under}/*"
+
+      module #{name_camel}
+        def self.run
+          Game.new.run
+        end
+      end
+
+      #{name_camel}.run
+
+      CONTENT
+
+      file_path = "#{project_dir}/src/#{name_under}.cr"
+
+      result = write(file_path, content)
+
+      return result unless result
+
+      dir_path = "#{project_dir}/src/#{name_under}"
+
+      result = make_dir(dir_path)
+
+      content = <<-CONTENT
+      module #{name_camel}
+        class Game
+          SCREEN_WIDTH  = 1280
+          SCREEN_HEIGHT =  768
+
+          DEBUG = false
+
+          TARGET_FPS = 60
+          DRAW_FPS   = DEBUG
+
+          def initialize
+            LibRay.init_window(SCREEN_WIDTH, SCREEN_HEIGHT, "#{name_camel}")
+            LibRay.set_target_fps(TARGET_FPS)
+          end
+
+          def run
+            while !LibRay.window_should_close?
+              frame_time = LibRay.get_frame_time
+              update(frame_time)
+              draw_init
+            end
+
+            close
+          end
+
+          def update(frame_time)
+          end
+
+          def draw
+          end
+
+          def draw_init
+            LibRay.begin_drawing
+            LibRay.clear_background LibRay::BLACK
+
+            draw
+
+            LibRay.draw_fps(0, 0) if DRAW_FPS
+            LibRay.end_drawing
+          end
+
+          def close
+            LibRay.close_window
+          end
+        end
+      end
+
+      CONTENT
+
+      file_path = "#{dir_path}/game.cr"
+
+      write(file_path, content)
     end
   end
 
